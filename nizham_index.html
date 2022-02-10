@@ -17,24 +17,24 @@
     </style>
     <fieldset>
       <legend>Employee Information</legend>
-      <label for="fname">First name:</label>
-      <input type="text" id="fname" name="fname" />
+      <label for="firstNameInput">First name:</label>
+      <input type="text" id="fullNameInput" name="firstname" />
       <br />
       <br />
-      <label for="lname">Last name:</label>
-      <input type="text" id="lname" name="lname" />
+      <label for="lastNameInput">Last name:</label>
+      <input type="text" id="lastNameInput" name="lastName" />
       <br />
       <br />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" />
+      <label for="emailInput">Email:</label>
+      <input type="email" id="emailInput" name="email" />
       <br />
       <br />
-      <label for="age">Age:</label>
-      <input type="number" id="age" name="age" />
+      <label for="ageInput">Age:</label>
+      <input type="number" id="ageInput" name="age" />
       <br />
       <br />
       <label for="occupation">Occupation</label>
-      <select id="occupation">
+      <select id="occupationInput">
         <option>Software Developer</option>
         <option>UI/UX</option>
         <option>Digital Marketer</option>
@@ -62,7 +62,17 @@
         </tr>
       </thead>
 
-      <tbody id="tableData"></tbody>
+      <tbody id="tableData">
+        <!-- <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>John@mail.com</td>
+                <td>29</td>
+                <td>Software Developer</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr> -->
+      </tbody>
     </table>
 
     <br />
@@ -70,12 +80,12 @@
 
     <fieldset>
       <legend>Search Employee</legend>
-      <label for="fName">Employee Name:</label>
-      <input type="text" id="searchFullName" name="fName" />
+      <label for="fullNameSearch">Employee Name:</label>
+      <input type="text" id="fullNameSearch" name="fullNameSearch" />
       <br />
       <br />
-      <label for="occupation">Occupation</label>
-      <select id="searchOccupation">
+      <label for="occupationSearch">Occupation</label>
+      <select id="occupationSearch">
         <option value="">All Occupations</option>
         <option>Software Developer</option>
         <option>UI/UX</option>
@@ -117,8 +127,8 @@
         constructor(fullName, email, age, occupation) {
           this.fullName = fullName;
           this.email = email;
-          this.age = age;
           this.occupation = occupation;
+          this.age = age;
         }
       }
 
@@ -195,12 +205,17 @@
       renderData();
 
       const addData = () => {
-        const firstNameInput = document.getElementById("fName").value;
-        const lastNameInput = document.getElementById("lName").value;
-        const fullName = fName + " " + lName;
-        const emailInput = document.getElementById("email").value;
-        const ageInput = document.getElementById("age").value;
-        const occupationInput = document.getElementById("occupation").value;
+        const firstNameInput = document.getElementById("firstNameInput").value;
+        const lastNameInput = document.getElementById("lastNameInput").value;
+        const fullName = firstNameInput + " " + lastNameInput;
+
+        const emailInput = document.getElementById("emailInput").value;
+
+        const occupationInput =
+          document.getElementById("occupationInput").value;
+
+        let ageInput = document.getElementById("ageInput").value;
+        ageInput = parseInt(ageInput);
 
         // Input validation
         if (
@@ -224,10 +239,10 @@
         data.push(newPerson);
         renderData();
 
-        document.getElementById("fName").value = "";
-        document.getElementById("lName").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("age").value = "";
+        document.getElementById("firstNameInput").value = "";
+        document.getElementById("lastNameInput").value = "";
+        document.getElementById("emailInput").value = "";
+        document.getElementById("ageInput").value = "";
       };
       renderData();
 
@@ -254,14 +269,14 @@
 
       const searchEmployee = () => {
         let searchResult = "";
-        let searchEmployee = document.getElementById("searchFullName").value;
-        let searchOccupation =
-          document.getElementById("searchOccupation").value;
+        let employeeSearch = document.getElementById("fullNameSearch").value;
+        let occupationSearch =
+          document.getElementById("occupationSearch").value;
 
         data.forEach((val, idx) => {
           if (
-            val.fullName.toLowerCase().includes(searchEmployee.toLowerCase()) &&
-            val.occupation.includes(searchOccupation)
+            val.fullName.toLowerCase().includes(employeeSearch.toLowerCase()) &&
+            val.occupation.includes(occupationSearch)
           ) {
             searchResult += `
                     <tr>
